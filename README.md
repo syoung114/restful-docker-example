@@ -1,7 +1,5 @@
 # RESTful-Docker-Example
 
----
-
 ## Introduction
 
 This is an example of using Docker as a host and a Python script as a client. Here the host contains a variety of test scripts that the client can interact with. These include:
