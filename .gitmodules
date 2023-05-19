@@ -1,0 +1,3 @@
+[submodule "chessless_rest/chessless"]
+	path = chessless_rest/chessless
+	url = https://github.com/syoung114/chessless

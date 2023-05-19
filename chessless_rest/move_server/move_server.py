@@ -1,5 +1,5 @@
 from flask import Flask, request
-from chessless import undaemonize
+from chessless.src import undaemonize
 #import undaemonize
 
 app = Flask(__name__)
