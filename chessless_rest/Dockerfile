@@ -10,7 +10,7 @@ RUN apt-get update
 #RUN apt-get install -y <package-name1> <package-name2>
 
 # Copy application files into the container
-#COPY . /app
+COPY chessless/Stockfish/* chessless/src/undaemonize.py move_server.py ./move_server
 
 # Set the working directory to /app
 #WORKDIR /app
