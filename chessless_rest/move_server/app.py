@@ -1,10 +1,10 @@
 from flask import Flask, request
-from chessless.src import undaemonize
-#import undaemonize
+#from chessless.src import undaemonize
+import undaemonize
 
 app = Flask(__name__)
 
-@app.route('/entry', methods=['GET'])
+@app.route('/eval', methods=['GET'])
 def test():
     fen = request.args.get("fen")
     depth = request.args.get("depth")
@@ -17,7 +17,7 @@ def test():
 
 @app.route('/')
 def hello():
-    return 'skdfjslkdf'
+    return ''
 
 if __name__ == '__main__':
     app.run()
