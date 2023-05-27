@@ -4,7 +4,7 @@ docker_address = ''
 fen = ''
 depth = -1
 
-def undaemonize(pathargs, stdins, just_last_line=False):
+def undaemonize():
     #I am intentionally ignoring the arguments I just passed because REST arguments should be encapsulated.
     #Instead fen and depth are used and are defined in override.py.
     succinct = 1 if just_last_line else 0

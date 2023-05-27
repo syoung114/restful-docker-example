@@ -10,7 +10,7 @@ In a real world example, I imagine the codebase would be more integrated with it
 
 #source:
 #https://stackoverflow.com/questions/3012473/how-do-i-override-a-python-import
-#https://stackoverflow.com/questions/30379893/replacing-an-imported-module-dependency
+#https://stackoverflow.com/question30379893/replacing-an-imported-module-dependency 
 
 import argparse
 parser = argparse.ArgumentParser('Play chess with a restful docker host')
@@ -18,16 +18,28 @@ parser.add_argument('address', type=str, help='The IP address of the docker cont
 args = parser.parse_args()
 
 import sys
-del sys.modules['chessless.undaemonize']
-sys.modules['chessless.undaemonize'] = __import__('move_request')
+#del sys.modules['chessless.undaemonize'] #module has not been loaded yet so no del needed
+sys.modules['undaemonize'] = __import__('move_server.undaemonize')
 
 from chessless.src import playchess
 playchess.depth, playchess.play_as_black = playchess.get_arguments()
 
-import move_request
-move_request.fen = playchess.board.fen()
-move_request.depth = playchess.depth
-move_request.docker_address = args.address
+import move_server.undaemonize
+move_server.undaemonize.docker_address = args.address
+move_server.undaemonize.depth = playchess.depth
+move_server.undaemonize.just_last_line = True
+
+import chess
+def stockfish_move():
+    move_server.undaemonize.fen = playchess.board.fen()
+
+    stockfish = move_server.undaemonize.undaemonize()
+    
+    sf_move = playchess.regex.search(stockfish).group(0)
+    sf_uci = chess.Move.from_uci(sf_move)
+    playchess.board.push(sf_uci)
+
+playchess.stockfish_move = stockfish_move
 
 import curses
 curses.wrapper(playchess.main)
