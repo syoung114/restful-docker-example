@@ -1,2 +1,2 @@
 #!/bin/bash
-docker build -t restful-docker-example .
+docker build -t chessless .

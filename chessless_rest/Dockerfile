@@ -1,24 +1,20 @@
-#Template file
+#compile stockfish on the base image of the one we are about to use (python)
+#this particular image is debian with extra things installed. Make is included somewhere in the FROM stack which we need to compile stockfish.
+FROM buildpack-deps:bullseye AS stockfish
+COPY chessless/Stockfish/ .
+RUN cd src/ && make clean && make -j build ARCH=x86-64-modern COMPCXX=g++ && cd ..
 
-# Base image
-FROM python:latest
+#now actually do the thing with python installed
+FROM python:bullseye
 
 WORKDIR /move_server
-# Update package lists
-#RUN apt-get update
 
-# Install necessary packages
-#RUN apt-get install -y <package-name1> <package-name2>
+#copy the compiled binary to the image we are using
+COPY --from=stockfish src/stockfish .
 
-# Copy application files into the container
-COPY chessless/Stockfish chessless/src/undaemonize.py move_server/move_server.py requirements.txt .
+#copy everything we need to run the server.
+COPY chessless/src/undaemonize.py move_server/app.py requirements.txt chessless/init.sh .
 
-# Set the working directory to /app
-
-# Expose port for the application
-#EXPOSE <port>
-
-# Define entrypoint command
-RUN pip install requirements.txt
+RUN pip install -r requirements.txt
 
 CMD [ "python", "-m", "flask", "run", "--host=0.0.0.0" ]
