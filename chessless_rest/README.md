@@ -14,4 +14,4 @@ You might consider containerizing a flask application redundant because the unde
 
 ## License
 
-You may use the code as a template and use that template however you like but the underlying chessless/Stockfish code is licensed under GPL-3.0. By "template" I mean a body of work that ought to be replaced with a work of your owm.
+You may use the code as a template and use that template however you like but the underlying chessless/Stockfish code is licensed under GPL-3.0. By "template" I mean a body of work that ought to be replaced with a work of your own.
